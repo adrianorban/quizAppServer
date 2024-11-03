@@ -16,9 +16,9 @@ exports.createTest = (req, res) => {
         res.status(400).send(`Schema error: ${testCreationValidation(req.body).error}`);
         return;
     }
-    const { name, difficulty, time, chapters } = req.body;
+    const { name, difficulty, time, chapters, questionsNr } = req.body;
     
-    //TODO generate questions here
+    //TODO generate questions here base on questionsNr
     const questions = "[]";
 
     db.query("INSERT INTO tests SET ?", {
