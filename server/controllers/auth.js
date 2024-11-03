@@ -9,7 +9,8 @@ const db = mysql.createConnection({
     host: read('mysql-host'),
     user: read('mysql-user'),
     password: read('mysql-password'),
-    database: read('mysql-database')
+    database: read('mysql-database'),
+    port: read('mysql-port')
 });
 
 exports.userDetails = (req, res) => {
@@ -96,6 +97,8 @@ exports.register = (req, res) => {
 
     db.query('SELECT email FROM users WHERE email = ?', [email], async (error, results) => {
         if(error) {
+            console.log("Error -------");
+            console.log(error);
             res.status(200).json({
                 success: false,
                 errorMsg: "DB error"

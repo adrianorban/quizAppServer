@@ -12,7 +12,8 @@ const db = mysql.createConnection({
     host: read('mysql-host'),
     user: read('mysql-user'),
     password: read('mysql-password'),
-    database: read('mysql-database')
+    database: read('mysql-database'),
+    port: read('mysql-port')
 });
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'local') {
