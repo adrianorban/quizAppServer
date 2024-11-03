@@ -122,8 +122,7 @@ exports.register = (req, res) => {
                     email: email, 
                     password: hashedPassword,
                     isActive: true,
-                    isPro: false,
-                    streamUrl: ""
+                    coins: 0
                 }, (error, results) => {
                     if(error) {
                         res.status(500).json({

@@ -18,8 +18,7 @@ exports.registerProValidation = (data) => {
         name: Joi.string().required(),
         email: Joi.string().required().email(),
         password: Joi.string().required(),
-        passwordConfirm: Joi.string().required(),
-        streamUrl: Joi.string().required()
+        passwordConfirm: Joi.string().required()
     });
     
     return schema.validate(data);
@@ -34,13 +33,13 @@ exports.loginValidation = (data) => {
     return schema.validate(data);
 }
 
-exports.roomCreationValidation = (data) => {
+exports.testCreationValidation = (data) => {
     const schema = Joi.object({
         name: Joi.string().required(),
-        game: Joi.string().required(),
-        hostAccount: Joi.number().required(),
-        roomSlots: Joi.number().required(),
-        slotPrice: Joi.number().required(),
+        chapters: Joi.string().required(),
+        difficulty: Joi.number().required(),
+        time: Joi.number().required(),
+        questionsNr: Joi.number().required()
     });
 
     return schema.validate(data);

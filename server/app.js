@@ -41,7 +41,7 @@ app.use(cookieParser());
 
 //route middlewares
 app.use('/api/auth/', require("./api/authPaths"));
-app.use('/api/room/', require("./api/roomPaths"));
+app.use('/api/test/', require("./api/testPaths"));
 app.use('/api/', require("./api/profilePaths"));
 
 db.connect((error) => {

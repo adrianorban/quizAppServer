@@ -21,29 +21,32 @@ USE `nodejs_login`;
 -- Table structure for table `rooms`
 --
 
-DROP TABLE IF EXISTS `rooms`;
+DROP TABLE IF EXISTS `tests`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `rooms` (
+CREATE TABLE `tests` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL DEFAULT 'Room',
-  `game` varchar(100) NOT NULL,
-  `hostAccount` int(11) NOT NULL,
-  `roomSlots` int(11) NOT NULL,
-  `slotPrice` int(11) NOT NULL,
-  `active` tinyint(4) NOT NULL DEFAULT '1',
+  `name` varchar(100) NOT NULL DEFAULT 'Test',
+  `userId` int(11) NOT NULL,
+  `createdOn` date NOT NULL,
+  `finishedOn` date,
+  `score` int(11) NOT NULL,
+  `questions` varchar(100) NOT NULL DEFAULT '[]',
+  `chapters` varchar(100) NOT NULL DEFAULT '[]',
+  `time` int(11) NOT NULL,
+  `difficulty` int(11) NOT NULL DEFAULT 5,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `rooms`
+-- Dumping data for table `tests`
 --
 
-LOCK TABLES `rooms` WRITE;
-/*!40000 ALTER TABLE `rooms` DISABLE KEYS */;
-INSERT INTO `rooms` VALUES (1,'test9','gameName1',1,4,3,1),(2,'test crreate game','gameName2',1,2,10,1);
-/*!40000 ALTER TABLE `rooms` ENABLE KEYS */;
+LOCK TABLES `tests` WRITE;
+/*!40000 ALTER TABLE `tests` DISABLE KEYS */;
+INSERT INTO `tests` VALUES (1,'test9',1234,'2022-06-10',null,0,'[]','[]',0,5); 
+/*!40000 ALTER TABLE `tests` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,3 +59,4 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2022-06-29 23:03:02
+

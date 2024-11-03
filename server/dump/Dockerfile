@@ -3,6 +3,7 @@ FROM mysql:5.7
 ENV MYSQL_ROOT_PASSWORD=passwordHere
 
 COPY ./nodejs_login_users.sql /docker-entrypoint-initdb.d/
+COPY ./nodejs_login_tests.sql /docker-entrypoint-initdb.d/
 
 
 

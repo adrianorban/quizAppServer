@@ -30,8 +30,6 @@ CREATE TABLE `users` (
   `email` varchar(200) NOT NULL,
   `password` varchar(200) NOT NULL,
   `isActive` tinyint(4) NOT NULL DEFAULT '0',
-  `isPro` tinyint(4) NOT NULL DEFAULT '0',
-  `streamUrl` varchar(200) DEFAULT NULL,
   `coins` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `userscol_UNIQUE` (`id`)
@@ -44,7 +42,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'test7','adi7@gmail.com','$2a$10$G/W/LXgg2druMVSWQYJSbuDeMBHdls/5hgQrD8nARX.H2ceR7TPYu',1,0,'',0),(2,'test1','adi1@gmail.com','$2a$10$HvFyAthD7cCg0wbqUqtBDO68na7u7Bbwbl0GJqPxPXLvYqvWee0GG',1,0,'',0),(3,'test2','adi2@gmail.com','$2a$10$4X9JlNGMWEMnOXiYnBvSvuanxK41gsBQEcO8jqZ3YNKhwnB/0nrNS',1,0,'',0);
+INSERT INTO `users` VALUES (1,'test7','adi7@gmail.com','$2a$10$G/W/LXgg2druMVSWQYJSbuDeMBHdls/5hgQrD8nARX.H2ceR7TPYu',1,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
