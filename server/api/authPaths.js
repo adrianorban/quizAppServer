@@ -5,7 +5,6 @@ const activeSession = require("../middleware/verifySession");
 const router = express.Router();
 
 router.post("/register", authController.register);
-router.post("/registerPro", authController.registerPro);
 router.post("/login", authController.login);
 router.get("/user-details", activeSession, authController.userDetails);
 router.post("/checkPass", authController.checkPass);

@@ -1,22 +1,16 @@
-const mysql = require("mysql");
+const mysql = require("mysql2");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const { registerValidation, registerProValidation, loginValidation } = require("../schema/schema");
 const { read } = require('../utils/secrets');
 
-const db = mysql.createConnection({
-    host: read('mysql-host'),
-    user: read('mysql-user'),
-    password: read('mysql-password'),
-    database: read('mysql-database'),
-    port: read('mysql-port')
-});
+const db = require("../dbConnection")
 
 exports.userDetails = (req, res) => {
     const { _id } = req.user;
 
-    db.query('SELECT email, name, isPro, isActive, streamUrl, coins FROM users WHERE id = ?', [_id],  (error, results) => {
+    db.connection.query('SELECT email, name, isPro, isActive, streamUrl, coins FROM users WHERE id = ?', [_id],  (error, results) => {
         if(error) {
             res.status(200).json({
                 success: false,
@@ -52,7 +46,7 @@ exports.login = (req, res) => {
     }
     const { name, password } = req.body;
 
-    db.query('SELECT password, id FROM users WHERE name = ?', [name],  (error, results) => {
+    db.connection.query('SELECT password, id FROM users WHERE name = ?', [name],  (error, results) => {
         if(error || !results) {
             res.status(200).json({
                 success: false,
@@ -89,13 +83,14 @@ exports.login = (req, res) => {
 }
 
 exports.register = (req, res) => {
+    console.log("------register--------")
     if (registerValidation(req.body).error) {
         res.status(400).send(`Schema error: ${registerValidation(req.body).error}`);
         return;
     }
     const { name, email, password, passwordConfirm } = req.body;
 
-    db.query('SELECT email FROM users WHERE email = ?', [email], async (error, results) => {
+    db.connection.query('SELECT email FROM users WHERE email = ?', [email], async (error, results) => {
         if(error) {
             console.log("Error -------");
             console.log(error);
@@ -104,7 +99,7 @@ exports.register = (req, res) => {
                 errorMsg: "DB error"
             });
         }
-
+        
         if(results.length > 0) {
             res.status(200).json({
                 success: false,
@@ -120,7 +115,7 @@ exports.register = (req, res) => {
                 let salt = bcrypt.genSaltSync(10);
                 let hashedPassword = await bcrypt.hashSync(password, salt);
 
-                db.query("INSERT INTO users SET ?", {
+                db.connection.query("INSERT INTO users SET ?", {
                     name: name, 
                     email: email, 
                     password: hashedPassword,
@@ -131,59 +126,6 @@ exports.register = (req, res) => {
                         res.status(500).json({
                             success: false,
                             errorMsg: "DB INSERT ERROR"
-                        });
-                    } else {
-                        res.status(200).json({
-                            success: true
-                        });
-                    }
-                })
-            }
-        }
-    });
-}
-
-exports.registerPro = (req, res) => {
-    if (registerProValidation(req.body).error) {
-        res.status(400).send(`Schema error: ${registerProValidation(req.body).error}`);
-        return;
-    }
-    const { name, email, password, passwordConfirm, streamUrl } = req.body;
-
-    db.query('SELECT email FROM users WHERE email = ?', [email], async (error, results) => {
-        if(error) {
-            res.status(200).json({
-                success: false,
-                errorMsg: "DB error"
-            });
-        }
-
-        if(results.length > 0) {
-            res.status(200).json({
-                success: false,
-                errorMsg: "Email used"
-            });
-        } else {
-            if(password !== passwordConfirm) {
-                res.status(200).json({
-                    success: false,
-                    errorMsg: "Password missmatch"
-                });
-            } else {
-                let salt = bcrypt.genSaltSync(10);
-                let hashedPassword = await bcrypt.hashSync(password, salt);
-
-                db.query("INSERT INTO users SET ?", {
-                    name: name, 
-                    email: email, 
-                    password: hashedPassword, 
-                    isActive: false, 
-                    isPro: true, 
-                    streamUrl: streamUrl
-                }, (error, results) => {
-                    if(error) {
-                        res.status(500).json({
-                            success: false
                         });
                     } else {
                         res.status(200).json({

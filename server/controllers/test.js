@@ -1,15 +1,9 @@
-const mysql = require("mysql");
+const mysql = require("mysql2");
 
 const { testCreationValidation } = require("../schema/schema");
 const { read } = require('../utils/secrets');
 
-const db = mysql.createConnection({
-    host: read('mysql-host'),
-    user: read('mysql-user'),
-    password: read('mysql-password'),
-    database: read('mysql-database'),
-    port: read('mysql-port')
-});
+const db = require("../dbConnection")
 
 // createRoom
 exports.createTest = (req, res) => {
@@ -22,7 +16,7 @@ exports.createTest = (req, res) => {
     //TODO generate questions here base on questionsNr
     const questions = "[]";
 
-    db.query("INSERT INTO tests SET ?", {
+    db.connection.query("INSERT INTO tests SET ?", {
         name: name,
         userId: req.user._id, 
         createdOn: new Date().toISOString().split('T')[0],
