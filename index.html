@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style type="text/css">
+        .context-menu {
+            position: absolute;
+            text-align: center;
+            background: lightgray;
+            border: 1px solid black;
+        }
+
+        .context-menu ul {
+            padding: 0px;
+            margin: 0px;
+            min-width: 150px;
+            list-style: none;
+        }
+
+        .context-menu ul li {
+            padding-bottom: 7px;
+            padding-top: 7px;
+            border: 1px solid black;
+        }
+
+        .context-menu ul li a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .context-menu ul li:hover {
+            background: darkgray;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1 style="text-align: center;">
+        Capitol Raceala
+    </h1>
+    <h1 style="text-align: center;">
+       Explicatie: Prostata este situată între vezica urinară și diafragma urogenitală, iar ductele ejaculatorii se deschid în uretra prostatică la nivelul verumontanum. Vascularizația prostatei provine din arterele vezicale inferioare și rectale medii
+    </h1>
+
+    <span id="ai-response" style="text-align: center;">Raspuns AI:</span>
+
+    <div id="contextMenu" class="context-menu" style="display:none">
+        <ul>
+            <li><a id="text-1" href="#">Ask AI ...</a></li>
+            <li><a href="#">Capitol: Boli</a></li>
+            <li><a href="#">Explicatie extra</a></li>
+            <li><a href="#">Altceva</a></li>
+            <li><a href="#">Inca Ceva</a></li>
+        </ul>
+    </div>
+
+    <script>
+        document.onclick = hideMenu;
+        document.oncontextmenu = rightClick;
+
+        function hideMenu() {
+            document.getElementById(
+                "contextMenu").style.display = "none"
+        }
+
+        function rightClick(e) {
+            e.preventDefault();
+            getSelectionText();
+            if (document.getElementById(
+                "contextMenu").style.display == "block")
+                hideMenu();
+            else {
+                let menu = document
+                    .getElementById("contextMenu")
+
+                menu.style.display = 'block';
+                menu.style.left = e.pageX + "px";
+                menu.style.top = e.pageY + "px";
+            }
+        }
+
+        function getSelectionText() {
+            let text = "";
+
+            if (window.getSelection) {
+                text = window.getSelection().toString();
+            } else if (document.selection && document.selection.type != "Control") {
+                text = document.selection.createRange().text;
+            }
+            const buttonText = "Ask AI: " + text;
+            document.getElementById("text-1").innerHTML = buttonText;
+        }
+    </script>
+</body>
+
+</html>
