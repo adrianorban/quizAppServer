@@ -37,9 +37,9 @@
 
 <body>
     <h1 style="text-align: center;">
-        Capitol Raceala
+        Capitol Raceala V5
     </h1>
-    <h1 style="text-align: center;">
+    <h1 style="text-align: center;" id="explicatie-text">
        Explicatie: Prostata este situată între vezica urinară și diafragma urogenitală, iar ductele ejaculatorii se deschid în uretra prostatică la nivelul verumontanum. Vascularizația prostatei provine din arterele vezicale inferioare și rectale medii
     </h1>
 
@@ -58,6 +58,41 @@
     <script>
         document.onclick = hideMenu;
         document.oncontextmenu = rightClick;
+        document.getElementById("text-1").onclick = generateAIResponse;
+
+        async function generateAIResponse() {
+            
+            document.getElementById("ai-response").innerHTML = "Loading ..."
+            const url = "http://167.71.1.68:5000/getChat";
+
+            // const url = "http://localhost:5000/getChat";
+
+            const text = document.getElementById("text-1").innerText.split(":")[1];
+            const prompt = document.getElementById("explicatie-text").innerText + ". Explica-mi " + text + " in maxim 100 de cuvinte.";
+            console.log(prompt);
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        prompt:prompt
+                    }),
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Host": "167.71.1.68",
+                        "Accept": "*/*",
+                    },
+                });
+                if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+                }
+
+                const json = await response.json();
+                console.log(json);
+                document.getElementById("ai-response").innerHTML = "ai response: " + json.question;
+            } catch (error) {
+                console.error(error.message);
+        }
+        }
 
         function hideMenu() {
             document.getElementById(
