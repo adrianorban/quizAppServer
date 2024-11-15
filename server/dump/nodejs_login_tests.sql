@@ -45,7 +45,9 @@ CREATE TABLE `tests` (
 
 LOCK TABLES `tests` WRITE;
 /*!40000 ALTER TABLE `tests` DISABLE KEYS */;
-INSERT INTO `tests` VALUES (1,'test9',1234,'2022-06-10',null,0,'[]','[]',0,5); 
+INSERT INTO `tests` VALUES (1,'test9',1234,'2022-06-10',null,0,'[]','[]',0,5);
+INSERT INTO `tests` VALUES (2,'test19',1,'2022-06-10',null,0,'[]','[]',0,5); 
+INSERT INTO `tests` VALUES (3,'test39',2,'2022-06-10',null,0,'[]','[]',0,5); 
 /*!40000 ALTER TABLE `tests` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
