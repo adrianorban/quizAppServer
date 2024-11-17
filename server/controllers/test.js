@@ -1,6 +1,6 @@
 const mysql = require("mysql2");
 
-const { testCreationValidation } = require("../schema/schema");
+const { testCreationValidation,testQuestionsValidation } = require("../schema/schema");
 const { read } = require('../utils/secrets');
 
 const db = require("../dbConnection")
@@ -14,7 +14,7 @@ exports.createTest = (req, res) => {
     const { name, difficulty, time, chapters, questionsNr } = req.body;
     
     //TODO generate questions here base on questionsNr
-    const questions = "[]";
+    const questions = questionsNr;
 
     const sqlQuery = "CALL createTest(?,?,?,?,?,?,?,?,?)"
 
@@ -45,8 +45,6 @@ exports.createTest = (req, res) => {
 //readTests
 exports.readTests = (req, res) => {
     const user = req.user._id;
-    //TODO optimize query, dont select *
-    // const sqlQuery =  "SELECT * FROM tests WHERE userID=" + req.user._id;
     const sqlQuery = "CALL getUserTests(?)"
 
     db.connection.query(sqlQuery, [req.user._id], (error, results) => {
@@ -54,7 +52,32 @@ exports.readTests = (req, res) => {
         if(error) {
             res.status(500).json({
                 success: false,
-                errorMsg: "DB INSERT ERROR" + JSON.stringify(error)
+                errorMsg: "DB readTests ERROR" + JSON.stringify(error)
+            });
+        } else {
+            res.status(200).json({
+                tests: results[0]
+            });
+        }
+    })
+}
+
+exports.readTestQuestions = (req, res) => {
+
+    if (testQuestionsValidation(req.body).error) {
+        res.status(400).send(`Schema error: ${testQuestionsValidation(req.body).error}`);
+        return;
+    }
+
+    const testId = req.body.testId;
+    const sqlQuery = "CALL getTestQuestions(?)"
+
+    db.connection.query(sqlQuery, [testId], (error, results) => {
+        console.log(results);
+        if(error) {
+            res.status(500).json({
+                success: false,
+                errorMsg: "DB readTestQuestions ERROR" + JSON.stringify(error)
             });
         } else {
             res.status(200).json({

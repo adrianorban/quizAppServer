@@ -44,3 +44,11 @@ exports.testCreationValidation = (data) => {
 
     return schema.validate(data);
 }
+
+exports.testQuestionsValidation = (data) => {
+    const schema = Joi.object({
+        testId: Joi.number().required()
+    });
+
+    return schema.validate(data);
+}
