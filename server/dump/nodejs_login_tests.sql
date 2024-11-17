@@ -31,6 +31,7 @@ CREATE TABLE `tests` (
   `createdOn` date NOT NULL,
   `finishedOn` date,
   `score` int(11) NOT NULL,
+  `maxScore` int(11) NOT NULL DEFAULT 0,
   `questions` int(11) NOT NULL DEFAULT 0,
   `chapters` varchar(100) NOT NULL DEFAULT '',
   `time` int(11) NOT NULL,
@@ -45,9 +46,9 @@ CREATE TABLE `tests` (
 
 LOCK TABLES `tests` WRITE;
 /*!40000 ALTER TABLE `tests` DISABLE KEYS */;
-INSERT INTO `tests` VALUES (1,'test9',1234,'2022-06-10',null,0,1,'Cardiologie,Urologie',0,5);
-INSERT INTO `tests` VALUES (2,'test19',1,'2022-06-10',null,0,1,'Urologie, Anestezie',0,5); 
-INSERT INTO `tests` VALUES (3,'test39',2,'2022-06-10',null,0,1,'Cardiologie',0,5); 
+INSERT INTO `tests` VALUES (1,'test9',1234,'2022-06-10',null,0,0,1,'Cardiologie,Urologie',0,5);
+INSERT INTO `tests` VALUES (2,'test19',1,'2022-06-10',null,0,0,1,'Urologie, Anestezie',0,5); 
+INSERT INTO `tests` VALUES (3,'test39',2,'2022-06-10',null,0,0,1,'Cardiologie',0,5); 
 /*!40000 ALTER TABLE `tests` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
