@@ -34,7 +34,7 @@ CREATE PROCEDURE createTest(
 )
 BEGIN
     INSERT INTO tests (name,userId,createdOn,finishedOn,score,questions,chapters,time,difficulty) VALUES (p_name,p_userId,p_createdOn,p_finishedOn,p_score,p_questions,p_chapters,p_time,p_difficulty);
-    CALL addqtLink(LAST_INSERT_ID(), p_chapters, p_questions);
+    CALL addqtLink(LAST_INSERT_ID(), p_chapters, p_questions, p_difficulty);
 END //
 
 DELIMITER ;
@@ -44,12 +44,13 @@ DELIMITER //
 CREATE PROCEDURE addqtLink(
 	IN p_testId INT(11),
     IN p_category VARCHAR(200),
-    IN p_questionsNr INT(11)
+    IN p_questionsNr INT(11),
+    IN p_difficulty INT(11)
 )
 BEGIN
 DECLARE finished INTEGER DEFAULT 0;
 DECLARE qId INT(11);
-DECLARE QuestionsIds CURSOR FOR SELECT id FROM questions WHERE INSTR(p_category, category) ORDER BY RAND() LIMIT p_questionsNr;
+DECLARE QuestionsIds CURSOR FOR SELECT id FROM questions WHERE INSTR(p_category, category) AND `difficulty`<= p_difficulty ORDER BY RAND() LIMIT p_questionsNr;
 DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
 OPEN QuestionsIds;
 createQTLink: LOOP
