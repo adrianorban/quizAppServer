@@ -14,7 +14,15 @@ DELIMITER //
 
 CREATE PROCEDURE getTestQuestions(IN test_Id INT)
 BEGIN
-    Select * from tqLink INNER JOIN questions ON tqLink.questionId = questions.id where tqLink.testId=test_Id;
+    -- Select * from tqLink INNER JOIN questions ON tqLink.questionId = questions.id where tqLink.testId=test_Id;
+    SELECT tqLink.id, question, questions.id, explanation, tqLink.answers,
+    GROUP_CONCAT(answers.answer  separator '# ') answer, 
+    GROUP_CONCAT(answers.correctAnswer  separator '# ') correctAnswer 
+    FROM tqLink 
+    JOIN questions ON questions.id=tqLink.questionId 
+    JOIN answers ON questions.id=answers.questionId
+    WHERE tqLink.testId=test_Id
+    GROUP BY tqLink.id;
 END //
 
 DELIMITER ;
