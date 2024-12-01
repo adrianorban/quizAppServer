@@ -73,15 +73,35 @@ exports.readTestQuestions = (req, res) => {
     const sqlQuery = "CALL getTestQuestions(?)"
 
     db.connection.query(sqlQuery, [testId], (error, results) => {
-        console.log(results);
         if(error) {
             res.status(500).json({
                 success: false,
                 errorMsg: "DB readTestQuestions ERROR" + JSON.stringify(error)
             });
         } else {
+            
+            const normalizedResult = results[0].map((question)=> {
+                question.answersData =[];
+                question.answer.split("#").forEach((answerItem, index) => {
+                    const aData = {
+                        answerText: answerItem,
+                        answerId:  question.answersIds.split("#")[index],
+                        isCorrect: question.correctAnswer.split("#")[index] == 1
+                    }
+                    question.answersData.push(aData);
+                });
+                
+                return {
+                    qtLinkid: question.id,
+                    question: question.question,
+                    answersData:question.answersData,
+                    questionId: question.questionId,
+                    explanation: question.explanation,
+                    answersGiven: question.answers
+                };
+            })
             res.status(200).json({
-                tests: results[0]
+                tests: normalizedResult
             });
         }
     })
