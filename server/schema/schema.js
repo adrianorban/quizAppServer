@@ -26,7 +26,7 @@ exports.registerProValidation = (data) => {
 
 exports.loginValidation = (data) => {
     const schema = Joi.object({
-        name: Joi.string().required(),
+        email: Joi.string().required().email(),
         password: Joi.string().required()
     });
 

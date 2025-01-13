@@ -44,9 +44,9 @@ exports.login = (req, res) => {
         });
         return;
     }
-    const { name, password } = req.body;
+    const { email, password } = req.body;
 
-    db.connection.query('SELECT password, id FROM users WHERE name = ?', [name],  (error, results) => {
+    db.connection.query('SELECT * FROM users WHERE email = ?', [email],  (error, results) => {
         if(error || !results) {
             res.status(200).json({
                 success: false,
@@ -56,8 +56,9 @@ exports.login = (req, res) => {
         if(results.length > 0) {
             let passwordMatch = bcrypt.compareSync(password, results[0].password);
             if(passwordMatch) {
+                console.log(results[0]);
                 //create and assign jwt 
-                const token = jwt.sign({ _id: results[0].id}, read('jwt-token'));
+                const token = jwt.sign({ _id: results[0].id, _name:results[0].name, _email:results[0].email}, read('jwt-token'));
                 res.cookie("authToken", token, {
                     maxAge: 1000 * 60 * 60 * 24,
                     httpOnly: true,
@@ -70,13 +71,13 @@ exports.login = (req, res) => {
             } else {
                 res.status(200).json({
                     success: false,
-                    errorMsg: "Wrong password"
+                    errorMsg: "Wrong email or password"
                 });
             }
         } else {
             res.status(200).json({
                 success: false,
-                errorMsg: "Wrong username"
+                errorMsg: "Wrong email or password"
             });
         }
     });

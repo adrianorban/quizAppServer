@@ -15,6 +15,7 @@ module.exports = function(req, res, next) {
 
     try{
         const activeSession = jwt.verify(token, read('jwt-token'));
+        console.log(activeSession)
         req.user = activeSession;
         console.log("active session user !!!", req.user);
         console.log("active session !!!", activeSession);
