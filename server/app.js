@@ -14,8 +14,11 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'local') {
 
     //for CORS
     let corsOptions = {
-        origin: process.env.WEB_APP_URL,
-        credentials:  true
+        // origin: process.env.WEB_APP_URL,
+        // credentials:  true
+        origin: ['http://localhost:3000'],
+        credentials:  true,
+        sameSite: 'none'
     }
     app.use(cors(corsOptions));
 }
