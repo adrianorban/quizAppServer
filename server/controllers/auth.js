@@ -118,6 +118,7 @@ exports.register = (req, res) => {
 
                 db.connection.query("INSERT INTO users SET ?", {
                     name: name, 
+                    google_id: null,
                     email: email, 
                     password: hashedPassword,
                     isActive: true,

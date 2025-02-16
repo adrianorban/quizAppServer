@@ -11,5 +11,7 @@ COPY ./procedures.sql /docker-entrypoint-initdb.d/
 # COPY ./addqtLink_procedure.sql /docker-entrypoint-initdb.d/
 
 #docker container run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password2000 mysql:5.7
+
+# To Use ====> 
 #docker build -t mysql .
 #docker run --name mysql -p 3306:3306 mysql

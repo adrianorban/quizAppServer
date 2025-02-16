@@ -32,7 +32,7 @@ DELIMITER //
 
 CREATE PROCEDURE createTest(
     IN p_name varchar(100),
-    IN p_userId int(11),
+    IN p_userId int(100),
     IN p_createdOn date,
     IN p_finishedOn date,
     IN p_score int(11),

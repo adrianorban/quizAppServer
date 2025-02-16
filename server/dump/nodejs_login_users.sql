@@ -25,7 +25,8 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(100) NOT NULL AUTO_INCREMENT,
+  `google_id` varchar(200) DEFAULT NULL,
   `name` varchar(200) NOT NULL,
   `email` varchar(200) NOT NULL,
   `password` varchar(200) NOT NULL,
@@ -42,7 +43,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'test7','adi7@gmail.com','$2a$10$G/W/LXgg2druMVSWQYJSbuDeMBHdls/5hgQrD8nARX.H2ceR7TPYu',1,0);
+INSERT INTO `users` VALUES (1,NULL,'test7','adi7@gmail.com','$2a$10$G/W/LXgg2druMVSWQYJSbuDeMBHdls/5hgQrD8nARX.H2ceR7TPYu',1,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
